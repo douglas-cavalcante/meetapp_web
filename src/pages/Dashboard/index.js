@@ -6,22 +6,22 @@ import { utcToZonedTime } from 'date-fns-tz';
 
 import { MdAddCircleOutline, MdChevronRight } from 'react-icons/md';
 
+import api from '~/services/api';
+import history from '~/services/history';
+
 import { Container, Meetup } from './styles';
 
-import history from '~/services/history';
-import api from '~/services/api';
-
 export default function Dashboard() {
-  const [organizations, setOrganizations] = useState([]);
+  const [organizations, setorganizations] = useState([]);
 
   useEffect(() => {
-    async function loadOrganizing() {
+    async function loadOrganizations() {
+      const response = await api.get('organizations');
+
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-      const response = await api.get('organizations');
       const data = response.data.map(meetup => {
         const compareDate = utcToZonedTime(parseISO(meetup.date), timezone);
-
         const dateFormatted = format(
           utcToZonedTime(parseISO(meetup.date), timezone),
           "d 'de' MMMM, 'às ' HH'h'",
@@ -30,24 +30,25 @@ export default function Dashboard() {
           }
         );
 
-        return {
+        const meetups = {
           ...meetup,
           dateFormatted,
           past: isBefore(compareDate, new Date()),
         };
+
+        return meetups;
       });
 
-      setOrganizations(data);
+      setorganizations(data);
     }
 
-    loadOrganizing();
+    loadOrganizations();
   }, []);
 
   return (
     <Container>
       <header>
         <strong>Meus meetups</strong>
-
         <button type="button" onClick={() => history.push('/meetup/new')}>
           <MdAddCircleOutline size={18} color="#fff" /> <span>Novo meetup</span>
         </button>
@@ -63,7 +64,7 @@ export default function Dashboard() {
                 type="button"
                 onClick={() => history.push(`/details/${meetup.id}`)}
               >
-                <MdChevronRight size={20} />
+                <MdChevronRight size={24} />
               </button>
             </span>
           </Meetup>

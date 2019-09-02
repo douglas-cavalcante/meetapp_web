@@ -3,24 +3,29 @@ import { darken } from 'polished';
 
 export const Container = styled.div`
   width: 90%;
+  margin: 60px auto;
   max-width: 900px;
-  margin: 50px auto;
+
   header {
     display: flex;
-    align-self: center;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+
     button {
       display: flex;
       align-items: center;
       justify-content: space-around;
-      border: 0;
+
       background: #f94d6a;
+      border: 0;
+
       border-radius: 4px;
-      padding: 10px;
       margin: 5px 0 0;
+      padding: 10px;
+
       height: 36px;
       transition: background 0.2s;
+
       span {
         font-weight: bold;
         color: #fff;

@@ -101,7 +101,7 @@ export default function Detalhes({ match }) {
               <Button
                 blue
                 type="button"
-                onClick={() => history.push(`/novo-editar/${meetup.id}`)}
+                onClick={() => history.push(`/meetup/${meetup.id}`)}
               >
                 <MdEdit size={18} color="#fff" /> <span>Editar</span>
               </Button>
